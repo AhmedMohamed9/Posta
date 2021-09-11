@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HadaryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Citiezen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="custimer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone1" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="phone2" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cus_ID" Type="int" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+    <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Deliver_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" />
+    <Property Name="place" Type="nvarchar(max)" />
+    <Property Name="recived_Name" Type="nvarchar(max)" />
+    <Property Name="recived_phone1" Type="varchar" MaxLength="50" />
+    <Property Name="recived_phone2" Type="varchar" MaxLength="50" />
+    <Property Name="City_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Orders_Citiezen">
+    <End Role="Citiezen" Type="Self.Citiezen" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citiezen">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="City_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_custimer">
+    <End Role="custimer" Type="Self.custimer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="custimer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Cus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="baku2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="dis" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="HadaryModelStoreContainer">
+    <EntitySet Name="Citiezen" EntityType="Self.Citiezen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="custimer" EntityType="Self.custimer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Orders_Citiezen" Association="Self.FK_Orders_Citiezen">
+      <End Role="Citiezen" EntitySet="Citiezen" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_custimer" Association="Self.FK_Orders_custimer">
+      <End Role="custimer" EntitySet="custimer" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

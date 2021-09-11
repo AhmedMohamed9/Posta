@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HadaryModelStoreContainer" CdmEntityContainer="HadaryEntities1">
+    <EntitySetMapping Name="Citiezens">
+      <EntityTypeMapping TypeName="HadaryModel.Citiezen">
+        <MappingFragment StoreEntitySet="Citiezen">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="custimers">
+      <EntityTypeMapping TypeName="HadaryModel.custimer">
+        <MappingFragment StoreEntitySet="custimer">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone1" ColumnName="phone1" />
+          <ScalarProperty Name="phone2" ColumnName="phone2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="HadaryModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Cus_ID" ColumnName="Cus_ID" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="Deliver_Price" ColumnName="Deliver_Price" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="place" ColumnName="place" />
+          <ScalarProperty Name="recived_Name" ColumnName="recived_Name" />
+          <ScalarProperty Name="recived_phone1" ColumnName="recived_phone1" />
+          <ScalarProperty Name="recived_phone2" ColumnName="recived_phone2" />
+          <ScalarProperty Name="City_id" ColumnName="City_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="baku2" FunctionName="HadaryModel.Store.baku2" />
+  </EntityContainerMapping>
+</Mapping>

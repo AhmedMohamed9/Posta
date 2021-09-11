@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HadaryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Citiezen">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Citiezen" FromRole="Citiezen" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="custimer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone1" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone2" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_custimer" FromRole="custimer" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cus_ID" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Deliver_Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="place" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="recived_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="recived_phone1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="recived_phone2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Citiezen" Relationship="Self.FK_Orders_Citiezen" FromRole="Orders" ToRole="Citiezen" />
+    <NavigationProperty Name="custimer" Relationship="Self.FK_Orders_custimer" FromRole="Orders" ToRole="custimer" />
+  </EntityType>
+  <Association Name="FK_Orders_Citiezen">
+    <End Role="Citiezen" Type="Self.Citiezen" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citiezen">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="City_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_custimer">
+    <End Role="custimer" Type="Self.custimer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="custimer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Cus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HadaryEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Citiezens" EntityType="Self.Citiezen" />
+    <EntitySet Name="custimers" EntityType="Self.custimer" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <AssociationSet Name="FK_Orders_Citiezen" Association="Self.FK_Orders_Citiezen">
+      <End Role="Citiezen" EntitySet="Citiezens" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_custimer" Association="Self.FK_Orders_custimer">
+      <End Role="custimer" EntitySet="custimers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <FunctionImport Name="baku2">
+      <Parameter Name="dis" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>
